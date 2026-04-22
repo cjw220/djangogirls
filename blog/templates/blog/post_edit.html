@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <div class="card p-4 shadow-sm"> <h2 class="mb-4">New post</h2>
+        <form method="POST" class="post-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="mt-4">
+                <button type="submit" class="btn btn-success px-5">Save</button>
+                <a href="{% url 'post_list' %}" class="btn btn-link text-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
