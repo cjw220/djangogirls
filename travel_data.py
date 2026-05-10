@@ -1,11 +1,37 @@
-# travel_data.py - 期末報告資料庫
+# travel_data.py - Paris Edition
 TRAVEL_DATABASE = {
     "funny": [
-        {"place": "你家的浴缸", "desc": "既然想玩水，浴缸就是你的太平洋。省錢又安全！", "img": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a"},
-        {"place": "巷口 7-11", "desc": "這是一個充滿異國風情且 24 小時不打烊的景點。", "img": "https://images.unsplash.com/photo-1628131338278-5653ee83d8cf"},
+        {
+            "place": "A Crowded Metro Line 13 Car", 
+            "desc": "Forget the Eiffel Tower! True Parisian life is being squeezed like a sardine in a metro car at 8:30 AM. Hold your breath!", 
+            "img": "https://images.unsplash.com/photo-1556122071-e404be745773"
+        },
+        {
+            "place": "A €12 Espresso at a Tourist Cafe", 
+            "desc": "Enjoy the 'authentic' experience of sitting on a tiny chair, paying too much for coffee, and being ignored by a grumpy waiter.", 
+            "img": "https://images.unsplash.com/photo-1554118811-1e0d58224f24"
+        },
+        {
+            "place": "A Bench watching Pigeons at Les Halles", 
+            "desc": "When you have no money and no energy, just share some breadcrumbs with your new feathered friends.", 
+            "img": "https://images.unsplash.com/photo-1521345155694-35ec643039df"
+        }
     ],
     "serious": [
-        {"place": "日本 京都", "desc": "漫步在清水寺，洗滌心靈的塵埃。", "img": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e"},
-        {"place": "瑞士 阿爾卑斯山", "desc": "感受大自然的壯闊，站在山頂，煩惱都會變小。", "img": "https://images.unsplash.com/photo-1531310197839-ccf54634509e"},
+        {
+            "place": "The Eiffel Tower at Night", 
+            "desc": "Witness the Iron Lady sparkling every hour. It's cliché, but it's pure magic every single time.", 
+            "img": "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f"
+        },
+        {
+            "place": "The Louvre Museum", 
+            "desc": "Spend your day lost in history. Even if you only see the Mona Lisa's forehead, it's worth it.", 
+            "img": "https://images.unsplash.com/photo-1499856871958-5b9627545d1a"
+        },
+        {
+            "place": "Montmartre & Sacré-Cœur", 
+            "desc": "Climb the hill for the best view of the city. Art, history, and a bit of a workout for your legs!", 
+            "img": "https://images.unsplash.com/photo-1509439581779-6298f75bf6e5"
+        }
     ]
 }
