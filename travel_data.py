@@ -1,4 +1,5 @@
 # travel_data.py - Paris Edition
+# MAKE SURE THE IMAGE URL IS VALID
 TRAVEL_DATABASE = {
     "funny": [
         {
@@ -21,17 +22,17 @@ TRAVEL_DATABASE = {
         {
             "place": "The Eiffel Tower at Night", 
             "desc": "Witness the Iron Lady sparkling every hour. It's cliché, but it's pure magic every single time.", 
-            "img": "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f"
+            "img": "https://images.unsplash.com/photo-1639519307979-b96102a07650?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         },
         {
             "place": "The Louvre Museum", 
             "desc": "Spend your day lost in history. Even if you only see the Mona Lisa's forehead, it's worth it.", 
-            "img": "https://images.unsplash.com/photo-1499856871958-5b9627545d1a"
+            "img": "https://images.unsplash.com/photo-1586168078184-1fe44f2491e1?q=80&w=1064&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         },
         {
             "place": "Montmartre & Sacré-Cœur", 
             "desc": "Climb the hill for the best view of the city. Art, history, and a bit of a workout for your legs!", 
-            "img": "https://images.unsplash.com/photo-1509439581779-6298f75bf6e5"
+            "img": "https://images.unsplash.com/photo-1682372249522-6e827e57e818?q=80&w=985&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         }
     ]
 }
