@@ -4,17 +4,17 @@ TRAVEL_DATABASE = {
         {
             "place": "A Crowded Metro Line 13 Car", 
             "desc": "Forget the Eiffel Tower! True Parisian life is being squeezed like a sardine in a metro car at 8:30 AM. Hold your breath!", 
-            "img": "https://images.unsplash.com/photo-1556122071-e404be745773"
+            "img": "https://images.unsplash.com/photo-1667818027944-fe5424723d1f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         },
         {
             "place": "A €12 Espresso at a Tourist Cafe", 
             "desc": "Enjoy the 'authentic' experience of sitting on a tiny chair, paying too much for coffee, and being ignored by a grumpy waiter.", 
-            "img": "https://images.unsplash.com/photo-1554118811-1e0d58224f24"
+            "img": "https://images.unsplash.com/photo-1735633601002-13e3c8bb25d0?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         },
         {
             "place": "A Bench watching Pigeons at Les Halles", 
             "desc": "When you have no money and no energy, just share some breadcrumbs with your new feathered friends.", 
-            "img": "https://images.unsplash.com/photo-1521345155694-35ec643039df"
+            "img": "https://images.unsplash.com/photo-1682939037029-7d4ce224abbf?q=80&w=983&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         }
     ],
     "serious": [
