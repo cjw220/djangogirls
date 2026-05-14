@@ -331,7 +331,7 @@ elif menu == "🧠 AI Quiz":
 
             name = st.text_input("Full Name")
             email = st.text_input("Email Address")
-            phone = st.text_input("Phone Number")
+            phone = st.text_input( "Phone Number", placeholder="+49 176 12345678")
             travelers = st.number_input(
                 "Number of Travelers",
                 min_value=1,
