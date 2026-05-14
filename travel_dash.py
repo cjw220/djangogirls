@@ -6,81 +6,75 @@ from travel_data import TRAVEL_DATABASE
 # --- CSS & THEMING ---
 st.markdown("""
     <style>
-    /* SIDEBAR BACKGROUND */
+/* ============================= */
+/* PREMIUM SIDEBAR */
+/* ============================= */
+
 section[data-testid="stSidebar"] {
-    background-color: #1E1E2F;
-    padding-top: 30px;
+    background: #151524;
+    border-right: 1px solid rgba(255,255,255,0.05);
+    padding-top: 40px;
 }
 
-/* HIDE RADIO BUTTON CIRCLES */
+/* Hide radio circles */
 div[role="radiogroup"] label > div:first-child {
     display: none;
 }
-/* SIDEBAR NAVIGATION TEXT */
+
+/* Remove Navigation title */
+section[data-testid="stSidebar"] .stRadio > label {
+    display: none;
+}
+
+/* Sidebar items */
 div[role="radiogroup"] label {
-    font-size: 20px !important;
+
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    border-radius: 14px;
+
+    font-size: 21px !important;
     font-weight: 700 !important;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
+
+    color: #F5F5F5 !important;
+
+    transition: all 0.25s ease;
 }
-/* NAV ITEM HOVER */
+
+/* Hover effect */
 div[role="radiogroup"] label:hover {
-    background-color: rgba(212, 175, 55, 0.18);
-    transform: translateX(5px);
-    transition: all 0.3s ease;
+
+    background-color: rgba(255,255,255,0.06);
+
+    transform: translateX(4px);
 }
-/* ACTIVE MENU ITEM */
+
+/* Active page */
 div[role="radiogroup"] label:has(input:checked) {
-    background-color: rgba(212, 175, 55, 0.25);
-    border-left: 4px solid #D4AF37;
-    padding-left: 15px;
+
+    background-color: rgba(255,255,255,0.08);
+
+    border-left: 3px solid white;
+
+    padding-left: 20px;
 }
-/* REMOVE TOOLTIP OUTLINE */
+
+/* Remove weird tooltip */
 [data-baseweb="tooltip"] {
     display: none !important;
 }
 
-/* SIDEBAR TEXT */
+/* Sidebar font */
 section[data-testid="stSidebar"] * {
     color: white;
     font-family: 'Helvetica Neue', sans-serif;
 }
 
-/* NAVIGATION TITLE */
-section[data-testid="stSidebar"] .stRadio label {
-    font-size: 18px;
-    font-weight: bold;
-    color: #D4AF37 !important;
-}
-
-/* RADIO BUTTON SPACING */
-div[role="radiogroup"] > label {
-    padding: 12px 10px;
-    margin-bottom: 10px;
-    border-radius: 12px;
-    transition: 0.3s;
-}
-
-/* HOVER EFFECT */
-div[role="radiogroup"] > label:hover {
-    background-color: rgba(212, 175, 55, 0.15);
-    cursor: pointer;
-}
-
-/* SELECTED RADIO OPTION */
-div[role="radiogroup"] label[data-baseweb="radio"] {
-    background-color: transparent;
-}
-
-/* SIDEBAR NAVIGATION HEADER */
-.css-1d391kg {
-    background-color: #1E1E2F;
-}
-
-/* REMOVE UGLY TOP GAP */
+/* Reduce top spacing */
 .block-container {
     padding-top: 2rem;
 }
-
     .main {
         background-color: #fafafa;
     }
