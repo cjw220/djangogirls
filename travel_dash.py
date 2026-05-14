@@ -66,7 +66,9 @@ div[role="radiogroup"] label:has(input:checked) {
 }
 
 /* Sidebar font */
-section[data-testid="stSidebar"] * {
+section[data-testid="stSidebar"] label,
+section[data-testid="stSidebar"] div,
+section[data-testid="stSidebar"] p {
     color: white;
     font-family: 'Helvetica Neue', sans-serif;
 }
@@ -74,6 +76,10 @@ section[data-testid="stSidebar"] * {
 /* Reduce top spacing */
 .block-container {
     padding-top: 2rem;
+}
+/* FIX BROKEN MATERIAL ICON TEXT */
+span.material-symbols-rounded {
+    display: none !important;
 }
 /* REMOVE STREAMLIT SIDEBAR TOGGLE BUTTON */
 [data-testid="collapsedControl"] {
