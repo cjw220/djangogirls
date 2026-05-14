@@ -12,6 +12,33 @@ section[data-testid="stSidebar"] {
     padding-top: 30px;
 }
 
+/* HIDE RADIO BUTTON CIRCLES */
+div[role="radiogroup"] label > div:first-child {
+    display: none;
+}
+/* SIDEBAR NAVIGATION TEXT */
+div[role="radiogroup"] label {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px;
+}
+/* NAV ITEM HOVER */
+div[role="radiogroup"] label:hover {
+    background-color: rgba(212, 175, 55, 0.18);
+    transform: translateX(5px);
+    transition: all 0.3s ease;
+}
+/* ACTIVE MENU ITEM */
+div[role="radiogroup"] label:has(input:checked) {
+    background-color: rgba(212, 175, 55, 0.25);
+    border-left: 4px solid #D4AF37;
+    padding-left: 15px;
+}
+/* REMOVE TOOLTIP OUTLINE */
+[data-baseweb="tooltip"] {
+    display: none !important;
+}
+
 /* SIDEBAR TEXT */
 section[data-testid="stSidebar"] * {
     color: white;
