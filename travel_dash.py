@@ -16,6 +16,7 @@ section[data-testid="stSidebar"] {
     padding-top: 40px;
 }
 
+
 /* Hide radio circles */
 div[role="radiogroup"] label > div:first-child {
     display: none;
@@ -84,6 +85,11 @@ span.material-symbols-rounded {
 /* REMOVE STREAMLIT SIDEBAR TOGGLE BUTTON */
 [data-testid="collapsedControl"] {
     display: none;
+}
+/* SIDEBAR COLLAPSE ICON */
+[data-testid="collapsedControl"] svg {
+    fill: white !important;
+    color: white !important;
 }
     .main {
         background-color: #fafafa;
