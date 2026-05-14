@@ -64,10 +64,6 @@ div[role="radiogroup"] label:has(input:checked) {
 [data-baseweb="tooltip"] {
     display: none !important;
 }
-/* HIDE BROKEN SIDEBAR COLLAPSE ICON TEXT */
-button[kind="header"] {
-    display: none !important;
-}
 
 /* Sidebar font */
 section[data-testid="stSidebar"] * {
@@ -78,6 +74,10 @@ section[data-testid="stSidebar"] * {
 /* Reduce top spacing */
 .block-container {
     padding-top: 2rem;
+}
+/* REMOVE STREAMLIT SIDEBAR TOGGLE BUTTON */
+[data-testid="collapsedControl"] {
+    display: none;
 }
     .main {
         background-color: #fafafa;
