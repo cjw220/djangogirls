@@ -6,6 +6,53 @@ from travel_data import TRAVEL_DATABASE
 # --- CSS & THEMING ---
 st.markdown("""
     <style>
+    /* SIDEBAR BACKGROUND */
+section[data-testid="stSidebar"] {
+    background-color: #1E1E2F;
+    padding-top: 30px;
+}
+
+/* SIDEBAR TEXT */
+section[data-testid="stSidebar"] * {
+    color: white;
+    font-family: 'Helvetica Neue', sans-serif;
+}
+
+/* NAVIGATION TITLE */
+section[data-testid="stSidebar"] .stRadio label {
+    font-size: 18px;
+    font-weight: bold;
+    color: #D4AF37 !important;
+}
+
+/* RADIO BUTTON SPACING */
+div[role="radiogroup"] > label {
+    padding: 12px 10px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    transition: 0.3s;
+}
+
+/* HOVER EFFECT */
+div[role="radiogroup"] > label:hover {
+    background-color: rgba(212, 175, 55, 0.15);
+    cursor: pointer;
+}
+
+/* SELECTED RADIO OPTION */
+div[role="radiogroup"] label[data-baseweb="radio"] {
+    background-color: transparent;
+}
+
+/* SIDEBAR NAVIGATION HEADER */
+.css-1d391kg {
+    background-color: #1E1E2F;
+}
+
+/* REMOVE UGLY TOP GAP */
+.block-container {
+    padding-top: 2rem;
+}
 
     .main {
         background-color: #fafafa;
