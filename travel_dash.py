@@ -47,18 +47,46 @@ if 'result' not in st.session_state:
     st.session_state.result = None
 
 
-# --- NAVIGATION MENU ---
-menu = st.sidebar.radio(
-    "Navigation",
-    [
-        "🏠 Home",
-        "ℹ️ About Us",
-        "✨ Services",
-        "🧠 AI Quiz",
-        "📩 Contact",
-        "⚖️ Imprint"
-    ]
-)
+# --- TOP NAVIGATION BAR ---
+col1, col2, col3, col4, col5, col6 = st.columns([3,1,1,1,1,1])
+
+with col1:
+    st.markdown("## 🥐 Paris Destiny")
+
+with col2:
+    home_btn = st.button("Home")
+
+with col3:
+    about_btn = st.button("About")
+
+with col4:
+    services_btn = st.button("Services")
+
+with col5:
+    quiz_btn = st.button("Quiz")
+
+with col6:
+    contact_btn = st.button("Contact")
+    # --- PAGE STATE ---
+if 'menu' not in st.session_state:
+    st.session_state.menu = "Home"
+
+if home_btn:
+    st.session_state.menu = "Home"
+
+if about_btn:
+    st.session_state.menu = "About"
+
+if services_btn:
+    st.session_state.menu = "Services"
+
+if quiz_btn:
+    st.session_state.menu = "Quiz"
+
+if contact_btn:
+    st.session_state.menu = "Contact"
+
+menu = st.session_state.menu
 
 
 # --- FUNCTIONS ---
