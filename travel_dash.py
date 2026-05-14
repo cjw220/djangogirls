@@ -86,17 +86,7 @@ span.material-symbols-rounded {
 [data-testid="collapsedControl"] {
     display: none;
 }
-/* FORCE SIDEBAR ICON WHITE */
-[data-testid="collapsedControl"] {
-    color: white !important;
-}
-
-[data-testid="collapsedControl"] * {
-    color: white !important;
-    fill: white !important;
-}
-
-  .main {
+    .main {
         background-color: #fafafa;
     }
 
