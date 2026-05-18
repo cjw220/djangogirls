@@ -4,98 +4,166 @@ import time
 from travel_data import TRAVEL_DATABASE
 
 # --- 1. DEFINE NAVIGATION ORDER (PAGES) ---
-# Ordered per user requirements: Home, Services, AI Quiz, Contact, About Us, Imprint
+# TA Feedback Applied: Replaced casual emojis with elegant non-emoji typography (✦)
+# Renamed "AI Quiz" to "Destiny Quiz" to look more like a bespoke luxury product
 PAGES = [
-    "🏠 Home",
-    "✨ Services",
-    "🧠 AI Quiz",
-    "📩 Contact",
-    "ℹ️ About Us",
-    "⚖️ Imprint"
+    "✦  Home",
+    "✦  Services",
+    "✦  Destiny Quiz",
+    "✦  Contact",
+    "✦  About Us",
+    "✦  Imprint"
 ]
 
 # --- 2. INITIALIZE SESSION STATE ---
 if 'menu_selection' not in st.session_state:
-    st.session_state.menu_selection = PAGES[0] # Default selected page is Home
+    st.session_state.menu_selection = PAGES[0] 
 
 if 'page' not in st.session_state:
-    st.session_state.page = 'home' # Internal sub-page state for the AI Quiz routing
+    st.session_state.page = 'home' 
 
 if 'result' not in st.session_state:
     st.session_state.result = None
 
 # --- 3. NAVIGATION SYNC FUNCTION ---
 def sync_nav():
-    """Sync menu selection state when the sidebar is clicked manually"""
     st.session_state.menu_selection = st.session_state.sidebar_nav
 
-# --- 4. CSS & THEMING ---
+# --- 4. CSS & THEMING (PARISIAN CHIC EDITION) ---
 st.markdown("""
     <style>
-/* PREMIUM SIDEBAR STYLE */
+/* ========================================================= */
+/* 🚀 IMPORT GOOGLE FONTS */
+/* ========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@300;400;500;600&display=swap');
+
+/* ========================================================= */
+/* GLOBAL STYLES & FONTS */
+/* ========================================================= */
+.stApp {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Force the entire background view container to be French Dusty Rose */
+[data-testid="stAppViewContainer"] {
+    background-color: #F5EBE6 !important;
+}
+
+/* 💡 FIX: Make the top header container transparent to remove the white bar */
+header[data-testid="stHeader"] {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+/* Luxury Serif font for Headers (Vogue Style) */
+h1, h2, h3, .stSubheader p {
+    font-family: 'Playfair Display', serif !important;
+    color: #1A1A2E !important;
+    font-weight: 700 !important;
+}
+
+h1 {
+    letter-spacing: -0.5px;
+    font-size: 3rem !important;
+}
+
+/* ========================================================= */
+/* PREMIUM SIDEBAR */
+/* ========================================================= */
 section[data-testid="stSidebar"] {
-    background: #151524;
-    border-right: 1px solid rgba(255,255,255,0.05);
+    background: #12121F !important;
+    border-right: 1px solid rgba(0,0,0,0.05);
     padding-top: 40px;
 }
 
-/* FIX: Only hide radio button circles inside the sidebar */
 section[data-testid="stSidebar"] div[role="radiogroup"] label > div:first-child {
-    display: none;
+    display: none !important;
 }
 
-/* Remove Navigation title styling */
 section[data-testid="stSidebar"] .stRadio > label {
-    display: none;
+    display: none !important;
 }
 
-/* FIX: Style configurations applied exclusively to sidebar options */
 section[data-testid="stSidebar"] div[role="radiogroup"] label {
-    padding: 14px 18px;
-    margin-bottom: 12px;
-    border-radius: 14px;
-    font-size: 20px !important;
-    font-weight: 700 !important;
-    color: #F5F5F5 !important;
-    transition: all 0.25s ease;
+    font-family: 'Playfair Display', serif !important;
+    padding: 14px 20px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    font-size: 18px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* FIX: Hover animation effect exclusive to sidebar items */
+section[data-testid="stSidebar"] p, 
+section[data-testid="stSidebar"] label, 
+section[data-testid="stSidebar"] div[role="radiogroup"] label p {
+    color: #EAEAEA !important;
+    font-family: 'Playfair Display', serif !important;
+    letter-spacing: 0.5px;
+}
+
 section[data-testid="stSidebar"] div[role="radiogroup"] label:hover {
-    background-color: rgba(255,255,255,0.06);
-    transform: translateX(4px);
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    transform: translateX(6px);
+}
+section[data-testid="stSidebar"] div[role="radiogroup ] label:hover p {
+    color: #C5A059 !important;
 }
 
-/* FIX: Active selected state styling exclusive to sidebar items */
 section[data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) {
-    background-color: rgba(255,255,255,0.08);
-    border-left: 3px solid white;
-    padding-left: 20px;
+    background-color: rgba(197, 160, 89, 0.12) !important;
+    border-left: 3px solid #C5A059 !important;
+    padding-left: 22px;
+}
+section[data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) p {
+    color: #C5A059 !important;
+    font-weight: 700 !important;
 }
 
-/* General layout adjustments and hiding redundant elements */
 [data-baseweb="tooltip"], [data-testid="collapsedControl"], span.material-symbols-rounded {
     display: none !important;
 }
 
-section[data-testid="stSidebar"] label, section[data-testid="stSidebar"] div, section[data-testid="stSidebar"] p {
-    color: white;
-    font-family: 'Helvetica Neue', sans-serif;
+.block-container {
+    padding-top: 3rem;
 }
 
-.stButton>button {
-    background-color: #D4AF37;
-    color: white;
-    border-radius: 10px;
-    border: none;
-    padding: 12px 24px;
-    font-weight: bold;
-    width: auto;
+/* ========================================================= */
+/* BUTTONS & FORMS */
+/* ========================================================= */
+.stButton>button, div[data-testid="stForm"] button {
+    background-color: #C5A059 !important; 
+    color: #FFFFFF !important;
+    border-radius: 8px !important;
+    border: none !important;
+    padding: 12px 28px !important;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(197, 160, 89, 0.2);
+    transition: all 0.25s ease !important;
 }
 
-h1, h2, h3 { color: #2c3e50; font-family: 'Helvetica Neue', sans-serif; }
-footer { visibility: hidden; }
-.custom-footer { text-align: center; padding: 20px; color: #7f8c8d; font-size: 0.8rem; }
+.stButton>button:hover, div[data-testid="stForm"] button:hover {
+    background-color: #A3803B !important; 
+    box-shadow: 0 6px 18px rgba(197, 160, 89, 0.35);
+    transform: translateY(-1px);
+}
+
+/* ========================================================= */
+/* CUSTOM FOOTER */
+/* ========================================================= */
+.custom-footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: #8A8A9A;
+    font-size: 0.8rem;
+    font-family: 'Montserrat', sans-serif;
+}
+.custom-footer hr {
+    border-top: 1px solid rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
     </style>
 """, unsafe_allow_html=True)
 
@@ -108,7 +176,6 @@ menu = st.sidebar.radio(
     on_change=sync_nav
 )
 
-# Drive the view layout based on the current active page
 current_page = st.session_state.menu_selection
 
 # --- 6. CORE LOGIC FUNCTIONS ---
@@ -122,21 +189,21 @@ def go_back():
 # =========================================================
 # HOME PAGE
 # =========================================================
-if current_page == "🏠 Home":
-    st.markdown("<h1>🥐 Paris Destiny Agency</h1>", unsafe_allow_html=True)
+if current_page == "✦  Home":
+    st.markdown("<h1>✦ Paris Destiny Agency</h1>", unsafe_allow_html=True)
     st.markdown("### *AI-Powered Luxury Travel Consulting*")
     st.divider()
     
-    st.subheader("Welcome to Paris Destiny Agency ✨")
+    st.subheader("Welcome to Paris Destiny Agency")
     st.write("""
-    Discover personalized Paris experiences powered by AI.
+    Discover personalized Paris experiences powered by advanced intelligence.
     Whether you dream of romantic evenings, hidden cafés, or luxury adventures,
     our agency helps you uncover your perfect Paris journey.
     """)
 
-    # CTA Button: Route user straight to the AI Quiz page
-    if st.button("✨ Try Our AI Quiz Now!"):
-        st.session_state.menu_selection = "🧠 AI Quiz"
+    # High-end action button
+    if st.button("Begin Your Destiny Match"):
+        st.session_state.menu_selection = "✦  Destiny Quiz"
         st.rerun()
 
     st.image(
@@ -155,34 +222,32 @@ if current_page == "🏠 Home":
 # =========================================================
 # SERVICES PAGE
 # =========================================================
-elif current_page == "✨ Services":
+elif current_page == "✦  Services":
     st.title("Our Services")
-    st.subheader("🥐 Luxury Food Tours")
+    st.subheader("Bespoke Gastronomy Tours")
     st.write("Discover hidden bakeries and iconic Paris cafés.")
-    st.subheader("🎨 Art & Museum Experiences")
-    st.write("Explore the Louvre and Parisian art culture.")
-    st.subheader("🌃 Romantic Evening Walks")
+    st.subheader("Curated Fine Art Experiences")
+    st.write("Explore the Louvre and private Parisian art collections.")
+    st.subheader("Exclusive Evening Promenades")
     st.write("Private guided experiences around Paris at night.")
-    st.subheader("🤖 AI Travel Matching")
-    st.write("Receive personalized recommendations through our AI quiz.")
+    st.subheader("Algorithmic Travel Matching")
+    st.write("Receive personalized recommendations through our bespoke consulting framework.")
     st.image("https://images.unsplash.com/photo-1511739001486-6bfe10ce785f", use_container_width=True)
 
 # =========================================================
-# AI QUIZ PAGE
+# DESTINY QUIZ PAGE
 # =========================================================
-elif current_page == "🧠 AI Quiz":
+elif current_page == "✦  Destiny Quiz":
     
-    # ---- QUIZ INPUT INTERFACE ----
     if st.session_state.page == 'home':
-        st.markdown("<h1>🔮 Paris Destiny Quiz</h1>", unsafe_allow_html=True)
+        st.markdown("<h1>✦ Paris Destiny Quiz</h1>", unsafe_allow_html=True)
         st.markdown("### Discover your spiritual corner in Paris")
         st.divider()
         q1 = st.selectbox("1. What kind of traveler are you?", ["I survive on chaos and caffeine", "Romantic explorer", "Art and museum lover", "Luxury traveler"])
         q2 = st.radio("2. Your ideal Paris breakfast?", ["Free hotel bread", "Artisan croissant and coffee", "Fancy rooftop brunch"])
         q3 = st.selectbox("3. What is your vacation energy?", ["Confused but trying my best", "Elegant and classy", "Adventure and exploration"])
 
-        if st.button("🔮 Seek My Fortune"):
-            # Internal keywords to match funny/chaotic user selections
+        if st.button("Consult Destiny"):
             funny_options = ["I survive on chaos and caffeine", "Free hotel bread", "Confused but trying my best"]
             funny_count = sum(1 for ans in [q1, q2, q3] if ans in funny_options)
             category = "funny" if funny_count >= 1 else "serious"
@@ -192,16 +257,15 @@ elif current_page == "🧠 AI Quiz":
                 go_to_result(category)
                 st.rerun()
 
-    # ---- QUIZ MATCHING RESULT PAGE ----
     elif st.session_state.page == 'result':
         res = st.session_state.result
-        st.markdown(f"<h1>🔮 Your Destiny: {res['place']}</h1>", unsafe_allow_html=True)
+        st.markdown(f"<h1>✦ Your Destiny: {res['place']}</h1>", unsafe_allow_html=True)
         st.image(res['img'], caption=f"View of {res['place']}", use_container_width=True)
         st.info(res['desc'])
         
         col1, col2 = st.columns(2)
         with col1:
-            if st.button("⬅️ Retake Quiz"):
+            if st.button("Retake Quiz"):
                 go_back()
                 st.rerun()
         with col2:
@@ -209,8 +273,7 @@ elif current_page == "🧠 AI Quiz":
             
         st.divider()
         
-        # Embedded Booking Form
-        st.subheader("📩 Book a Private Tour")
+        st.subheader("Book a Private Tour")
         with st.form("contact"):
             name = st.text_input("Full Name")
             email = st.text_input("Email Address")
@@ -220,7 +283,7 @@ elif current_page == "🧠 AI Quiz":
 # =========================================================
 # CONTACT PAGE
 # =========================================================
-elif current_page == "📩 Contact":
+elif current_page == "✦  Contact":
     st.title("Contact Us")
     with st.form("main_contact_form"):
         name = st.text_input("Full Name")
@@ -232,24 +295,23 @@ elif current_page == "📩 Contact":
 # =========================================================
 # ABOUT PAGE
 # =========================================================
-elif current_page == "ℹ️ About Us":
+elif current_page == "✦  About Us":
     st.title("About Paris Destiny Agency")
-    st.write("We combine technology and travel inspiration into one interactive experience.")
+    st.write("We combine software engineering and luxury travel inspiration into one interactive corporate prototype.")
     st.image("https://images.unsplash.com/photo-1499856871958-5b9627545d1a", use_container_width=True)
 
 # =========================================================
 # IMPRINT PAGE
 # =========================================================
-elif current_page == "⚖️ Imprint":
+elif current_page == "✦  Imprint":
     st.title("Imprint")
     st.write("Paris Destiny Agency | 123 Rue de la Paix, 75002 Paris, France")
 
 # --- FOOTER DISPLAY ---
-# Custom branded footer with team member recognition
 st.markdown("""
     <div class="custom-footer">
         <hr>
-        <p>© 2026 <b>Paris Destiny Agency</b> | Premium AI Travel Consulting</p>
+        <p>© 2026 <b>Paris Destiny Agency</b> | Premium Travel Consulting</p>
         <p style="font-style: italic; font-size: 0.75rem;">Created by Chenro & Darshan • All Rights Reserved</p>
     </div>
 """, unsafe_allow_html=True)
