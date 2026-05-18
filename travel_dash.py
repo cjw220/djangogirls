@@ -3,158 +3,141 @@ import random
 import time
 from travel_data import TRAVEL_DATABASE
 
-# --- CSS & THEMING ---
+# --- 1. DEFINE NAVIGATION ORDER (PAGES) ---
+# Ordered per user requirements: Home, Services, AI Quiz, Contact, About Us, Imprint
+PAGES = [
+    "🏠 Home",
+    "✨ Services",
+    "🧠 AI Quiz",
+    "📩 Contact",
+    "ℹ️ About Us",
+    "⚖️ Imprint"
+]
+
+# --- 2. INITIALIZE SESSION STATE ---
+if 'menu_selection' not in st.session_state:
+    st.session_state.menu_selection = PAGES[0] # Default selected page is Home
+
+if 'page' not in st.session_state:
+    st.session_state.page = 'home' # Internal sub-page state for the AI Quiz routing
+
+if 'result' not in st.session_state:
+    st.session_state.result = None
+
+# --- 3. NAVIGATION SYNC FUNCTION ---
+def sync_nav():
+    """Sync menu selection state when the sidebar is clicked manually"""
+    st.session_state.menu_selection = st.session_state.sidebar_nav
+
+# --- 4. CSS & THEMING ---
 st.markdown("""
     <style>
-/* ============================= */
-/* PREMIUM SIDEBAR (FIXED SELECTORS) */
-/* ============================= */
-
+/* PREMIUM SIDEBAR STYLE */
 section[data-testid="stSidebar"] {
     background: #151524;
     border-right: 1px solid rgba(255,255,255,0.05);
     padding-top: 40px;
 }
 
-/* 💡 修正：只有側邊欄的單選鈕圈圈需要隱藏 */
+/* 💡 FIX: Only hide radio button circles inside the sidebar */
 section[data-testid="stSidebar"] div[role="radiogroup"] label > div:first-child {
     display: none;
 }
 
-/* Remove Navigation title */
+/* Remove Navigation title styling */
 section[data-testid="stSidebar"] .stRadio > label {
     display: none;
 }
 
-/* 💡 修正：只有側邊欄的選項字體與樣式變更 */
+/* 💡 FIX: Style configurations applied exclusively to sidebar options */
 section[data-testid="stSidebar"] div[role="radiogroup"] label {
     padding: 14px 18px;
     margin-bottom: 12px;
     border-radius: 14px;
-    font-size: 21px !important;
+    font-size: 20px !important;
     font-weight: 700 !important;
-    letter-spacing: 0.3px;
     color: #F5F5F5 !important;
     transition: all 0.25s ease;
 }
 
-/* 💡 修正：只有側邊欄的 Hover 效果 */
+/* 💡 FIX: Hover animation effect exclusive to sidebar items */
 section[data-testid="stSidebar"] div[role="radiogroup"] label:hover {
     background-color: rgba(255,255,255,0.06);
     transform: translateX(4px);
 }
 
-/* 💡 修正：只有側邊欄的選中狀態效果 */
+/* 💡 FIX: Active selected state styling exclusive to sidebar items */
 section[data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) {
     background-color: rgba(255,255,255,0.08);
     border-left: 3px solid white;
     padding-left: 20px;
 }
 
-/* Remove weird tooltip */
-[data-baseweb="tooltip"] {
+/* General layout adjustments and hiding redundant elements */
+[data-baseweb="tooltip"], [data-testid="collapsedControl"], span.material-symbols-rounded {
     display: none !important;
 }
 
-/* Sidebar font */
-section[data-testid="stSidebar"] label,
-section[data-testid="stSidebar"] div,
-section[data-testid="stSidebar"] p {
+section[data-testid="stSidebar"] label, section[data-testid="stSidebar"] div, section[data-testid="stSidebar"] p {
     color: white;
     font-family: 'Helvetica Neue', sans-serif;
 }
 
-/* Reduce top spacing */
-.block-container {
-    padding-top: 2rem;
+.stButton>button {
+    background-color: #D4AF37;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    padding: 12px 24px;
+    font-weight: bold;
+    width: auto;
 }
-/* FIX BROKEN MATERIAL ICON TEXT */
-span.material-symbols-rounded {
-    display: none !important;
-}
-/* REMOVE STREAMLIT SIDEBAR TOGGLE BUTTON */
-[data-testid="collapsedControl"] {
-    display: none;
-}
-    .main {
-        background-color: #fafafa;
-    }
 
-    .stButton>button {
-        background-color: #D4AF37;
-        color: white;
-        border-radius: 10px;
-        border: none;
-        padding: 10px 20px;
-        font-weight: bold;
-    }
-
-    h1, h2, h3 {
-        color: #2c3e50;
-        font-family: 'Helvetica Neue', sans-serif;
-    }
-
-    footer {
-        visibility: hidden;
-    }
-
-    .custom-footer {
-        text-align: center;
-        padding: 20px;
-        color: #7f8c8d;
-        font-size: 0.8rem;
-    }
-
+h1, h2, h3 { color: #2c3e50; font-family: 'Helvetica Neue', sans-serif; }
+footer { visibility: hidden; }
+.custom-footer { text-align: center; padding: 20px; color: #7f8c8d; font-size: 0.8rem; }
     </style>
 """, unsafe_allow_html=True)
 
-# --- SESSION STATE ---
-if 'page' not in st.session_state:
-    st.session_state.page = 'home'
-
-if 'result' not in st.session_state:
-    st.session_state.result = None
-
-
-# --- NAVIGATION MENU ---
+# --- 5. SIDEBAR NAVIGATION CONTROLLER ---
 menu = st.sidebar.radio(
     "Navigation",
-    [
-        "🏠 Home",
-        "ℹ️ About Us",
-        "✨ Services",
-        "🧠 AI Quiz",
-        "📩 Contact",
-        "⚖️ Imprint"
-    ]
+    PAGES,
+    index=PAGES.index(st.session_state.menu_selection),
+    key="sidebar_nav",
+    on_change=sync_nav
 )
 
-# --- FUNCTIONS ---
+# Drive the view layout based on the current active page
+current_page = st.session_state.menu_selection
+
+# --- 6. CORE LOGIC FUNCTIONS ---
 def go_to_result(category):
     st.session_state.result = random.choice(TRAVEL_DATABASE[category])
     st.session_state.page = 'result'
 
-
 def go_back():
     st.session_state.page = 'home'
-
 
 # =========================================================
 # HOME PAGE
 # =========================================================
-if menu == "🏠 Home":
-
+if current_page == "🏠 Home":
     st.markdown("<h1>🥐 Paris Destiny Agency</h1>", unsafe_allow_html=True)
     st.markdown("### *AI-Powered Luxury Travel Consulting*")
     st.divider()
+    
     st.subheader("Welcome to Paris Destiny Agency ✨")
-
     st.write("""
     Discover personalized Paris experiences powered by AI.
-    Whether you dream of romantic evenings, hidden cafés,
-    luxury shopping, artistic adventures, or unforgettable food tours,
+    Whether you dream of romantic evenings, hidden cafés, or luxury adventures,
     our agency helps you uncover your perfect Paris journey.
     """)
+
+    # 🚀 CTA Button: Route user straight to the AI Quiz page
+    if st.button("✨ Try Our AI Quiz Now!"):
+        st.session_state.menu_selection = "🧠 AI Quiz"
+        st.rerun()
 
     st.image(
         "https://images.unsplash.com/photo-1502602898657-3e91760cbb34",
@@ -162,48 +145,17 @@ if menu == "🏠 Home":
         use_container_width=True
     )
     st.divider()
+    
     st.subheader("Why Choose Us?")
-
     col1, col2, col3 = st.columns(3)
-    with col1:
-        st.metric("Happy Travelers", "10,000+")
-    with col2:
-        st.metric("Hidden Cafés Explored", "250+")
-    with col3:
-        st.metric("Chance of Paris Drama", "99%")
-
-
-# =========================================================
-# ABOUT PAGE
-# =========================================================
-elif menu == "ℹ️ About Us":
-
-    st.title("About Paris Destiny Agency")
-    st.write("""
-    Paris Destiny Agency is a fictional luxury travel company
-    created as a graduation project.
-    Our mission is to combine technology, humor,
-    and travel inspiration into one interactive experience.
-    We help travelers discover:
-    - Romantic destinations
-    - Hidden Paris cafés
-    - Museum experiences
-    - Luxury adventures
-    - Fun local culture
-    """)
-
-    st.image(
-        "https://images.unsplash.com/photo-1499856871958-5b9627545d1a",
-        caption="Paris street life",
-        use_container_width=True
-    )
-
+    with col1: st.metric("Happy Travelers", "10,000+")
+    with col2: st.metric("Hidden Cafés Explored", "250+")
+    with col3: st.metric("Chance of Paris Drama", "99%")
 
 # =========================================================
 # SERVICES PAGE
 # =========================================================
-elif menu == "✨ Services":
-
+elif current_page == "✨ Services":
     st.title("Our Services")
     st.subheader("🥐 Luxury Food Tours")
     st.write("Discover hidden bakeries and iconic Paris cafés.")
@@ -213,175 +165,84 @@ elif menu == "✨ Services":
     st.write("Private guided experiences around Paris at night.")
     st.subheader("🤖 AI Travel Matching")
     st.write("Receive personalized recommendations through our AI quiz.")
-
-    st.image(
-        "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f",
-        caption="Luxury Paris Experience",
-        use_container_width=True
-    )
-
+    st.image("https://images.unsplash.com/photo-1511739001486-6bfe10ce785f", use_container_width=True)
 
 # =========================================================
 # AI QUIZ PAGE
 # =========================================================
-elif menu == "🧠 AI Quiz":
-
-    # ---------------- HOME QUIZ PAGE ----------------
+elif current_page == "🧠 AI Quiz":
+    
+    # ---- QUIZ INPUT INTERFACE ----
     if st.session_state.page == 'home':
-
         st.markdown("<h1>🔮 Paris Destiny Quiz</h1>", unsafe_allow_html=True)
         st.markdown("### Discover your spiritual corner in Paris")
         st.divider()
-
-        q1 = st.selectbox(
-            "1. What kind of traveler are you?",
-            [
-                "I survive on chaos and caffeine",
-                "Romantic explorer",
-                "Art and museum lover",
-                "Luxury traveler"
-            ]
-        )
-
-        q2 = st.radio(
-            "2. Your ideal Paris breakfast?",
-            [
-                "Free hotel bread",
-                "Artisan croissant and coffee",
-                "Fancy rooftop brunch"
-            ]
-        )
-
-        q3 = st.selectbox(
-            "3. What is your vacation energy?",
-            [
-                "Confused but trying my best",
-                "Elegant and classy",
-                "Adventure and exploration"
-            ]
-        )
+        q1 = st.selectbox("1. What kind of traveler are you?", ["I survive on chaos and caffeine", "Romantic explorer", "Art and museum lover", "Luxury traveler"])
+        q2 = st.radio("2. Your ideal Paris breakfast?", ["Free hotel bread", "Artisan croissant and coffee", "Fancy rooftop brunch"])
+        q3 = st.selectbox("3. What is your vacation energy?", ["Confused but trying my best", "Elegant and classy", "Adventure and exploration"])
 
         if st.button("🔮 Seek My Fortune"):
-
-            funny_options = [
-                "I survive on chaos and caffeine",
-                "Free hotel bread",
-                "Confused but trying my best"
-            ]
-
-            funny_count = sum(
-                1 for ans in [q1, q2, q3]
-                if ans in funny_options
-            )
-
+            # Internal keywords to match funny/chaotic user selections
+            funny_options = ["I survive on chaos and caffeine", "Free hotel bread", "Confused but trying my best"]
+            funny_count = sum(1 for ans in [q1, q2, q3] if ans in funny_options)
             category = "funny" if funny_count >= 1 else "serious"
-
+            
             with st.spinner('Consulting the spirits of Paris...'):
                 time.sleep(1.5)
                 go_to_result(category)
                 st.rerun()
 
-    # ---------------- RESULT PAGE ----------------
+    # ---- QUIZ MATCHING RESULT PAGE ----
     elif st.session_state.page == 'result':
-
         res = st.session_state.result
-
-        st.markdown(
-            f"<h1>🔮 Your Destiny: {res['place']}</h1>",
-            unsafe_allow_html=True
-        )
-
-        st.image(
-            res['img'],
-            caption=f"View of {res['place']}",
-            use_container_width=True
-        )
-
+        st.markdown(f"<h1>🔮 Your Destiny: {res['place']}</h1>", unsafe_allow_html=True)
+        st.image(res['img'], caption=f"View of {res['place']}", use_container_width=True)
         st.info(res['desc'])
-
-        # Navigation Buttons
+        
         col1, col2 = st.columns(2)
         with col1:
             if st.button("⬅️ Retake Quiz"):
                 go_back()
                 st.rerun()
         with col2:
-            if 'url' in res:
-                st.link_button("Official Info", res['url'])
-
+            if 'url' in res: st.link_button("Official Info", res['url'])
+            
         st.divider()
-
-        # Contact Form
+        
+        # Embedded Booking Form
         st.subheader("📩 Book a Private Tour")
         with st.form("contact"):
             name = st.text_input("Full Name")
             email = st.text_input("Email Address")
-            travelers = st.number_input(
-                "Number of Travelers",
-                min_value=1,
-                max_value=20,
-                value=2
-            )
-            notes = st.text_area("Any special requests?")
-
             if st.form_submit_button("Send to Consultant"):
-                st.success(
-                    f"Merci, {name}! "
-                    f"We will contact you at {email} soon."
-                )
-
+                st.success(f"Merci, {name}! We will contact you at {email} soon.")
 
 # =========================================================
 # CONTACT PAGE
 # =========================================================
-elif menu == "📩 Contact":
-
+elif current_page == "📩 Contact":
     st.title("Contact Us")
-    st.write("""
-    Have questions about your Paris adventure?
-    Our consultants are here to help.
-    """)
-
     with st.form("main_contact_form"):
         name = st.text_input("Full Name")
         email = st.text_input("Email Address")
-        phone = st.text_input("Phone Number", placeholder="+49 176 12345678")
-        message = st.text_area("Your Message")
-        submitted = st.form_submit_button("Send Message")
-
-        if submitted:
+        st.text_area("Your Message")
+        if st.form_submit_button("Send Message"):
             st.success("Your message has been sent successfully!")
 
+# =========================================================
+# ABOUT PAGE
+# =========================================================
+elif current_page == "ℹ️ About Us":
+    st.title("About Paris Destiny Agency")
+    st.write("We combine technology and travel inspiration into one interactive experience.")
+    st.image("https://images.unsplash.com/photo-1499856871958-5b9627545d1a", use_container_width=True)
 
 # =========================================================
 # IMPRINT PAGE
 # =========================================================
-elif menu == "⚖️ Imprint":
-
+elif current_page == "⚖️ Imprint":
     st.title("Imprint")
-    st.write("""
-    Paris Destiny Agency  
-    123 Rue de la Paix  
-    75002 Paris, France  
-    Email: hello@parisdestinyagency.com  
-    This website is a student graduation project.
-    Image Sources:
-    Unsplash.com
-    """)
+    st.write("Paris Destiny Agency | 123 Rue de la Paix, 75002 Paris, France")
 
-
-# =========================================================
-# FOOTER
-# =========================================================
-st.markdown("""
-    <div class="custom-footer">
-        <hr>
-        <p>
-        <b>Paris Destiny Agency</b> |
-        AI-Powered Luxury Travel Consulting
-        </p>
-        <p>
-        Student Graduation Project • Built with Streamlit
-        </p>
-    </div>
-""", unsafe_allow_html=True)
+# --- FOOTER DISPLAY ---
+st.markdown('<div class="custom-footer"><hr><p><b>Paris Destiny Agency</b> | Student Project</p></div>', unsafe_allow_html=True)
