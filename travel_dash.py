@@ -39,7 +39,7 @@ section[data-testid="stSidebar"] {
     padding-top: 40px;
 }
 
-/* 💡 FIX: Only hide radio button circles inside the sidebar */
+/* FIX: Only hide radio button circles inside the sidebar */
 section[data-testid="stSidebar"] div[role="radiogroup"] label > div:first-child {
     display: none;
 }
@@ -49,7 +49,7 @@ section[data-testid="stSidebar"] .stRadio > label {
     display: none;
 }
 
-/* 💡 FIX: Style configurations applied exclusively to sidebar options */
+/* FIX: Style configurations applied exclusively to sidebar options */
 section[data-testid="stSidebar"] div[role="radiogroup"] label {
     padding: 14px 18px;
     margin-bottom: 12px;
@@ -60,13 +60,13 @@ section[data-testid="stSidebar"] div[role="radiogroup"] label {
     transition: all 0.25s ease;
 }
 
-/* 💡 FIX: Hover animation effect exclusive to sidebar items */
+/* FIX: Hover animation effect exclusive to sidebar items */
 section[data-testid="stSidebar"] div[role="radiogroup"] label:hover {
     background-color: rgba(255,255,255,0.06);
     transform: translateX(4px);
 }
 
-/* 💡 FIX: Active selected state styling exclusive to sidebar items */
+/* FIX: Active selected state styling exclusive to sidebar items */
 section[data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) {
     background-color: rgba(255,255,255,0.08);
     border-left: 3px solid white;
@@ -134,7 +134,7 @@ if current_page == "🏠 Home":
     our agency helps you uncover your perfect Paris journey.
     """)
 
-    # 🚀 CTA Button: Route user straight to the AI Quiz page
+    # CTA Button: Route user straight to the AI Quiz page
     if st.button("✨ Try Our AI Quiz Now!"):
         st.session_state.menu_selection = "🧠 AI Quiz"
         st.rerun()
@@ -245,4 +245,11 @@ elif current_page == "⚖️ Imprint":
     st.write("Paris Destiny Agency | 123 Rue de la Paix, 75002 Paris, France")
 
 # --- FOOTER DISPLAY ---
-st.markdown('<div class="custom-footer"><hr><p><b>Paris Destiny Agency</b> | Student Project</p></div>', unsafe_allow_html=True)
+# Custom branded footer with team member recognition
+st.markdown("""
+    <div class="custom-footer">
+        <hr>
+        <p>© 2026 <b>Paris Destiny Agency</b> | Premium AI Travel Consulting</p>
+        <p style="font-style: italic; font-size: 0.75rem;">Created by Chenro & Darshan • All Rights Reserved</p>
+    </div>
+""", unsafe_allow_html=True)
