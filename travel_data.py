@@ -57,7 +57,7 @@ TRAVEL_DATABASE = {
             "place": "Montmartre & Sacré-Cœur", 
             "desc": "Climb the beautiful winding hills for the best panoramic view of the city. Art, street music, and a heavy workout for your legs!", 
             "img": "https://images.unsplash.com/photo-1682372249522-6e827e57e818?q=80&w=985&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            "url": "https://www.sacre-coeur-montmartre.fr/english/"
+            "url": "https://parisjetaime.com/eng/article/montmartre-village-in-paris-a728"
         },
         {
             "place": "Sainte-Chapelle", 
