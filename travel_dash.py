@@ -76,15 +76,6 @@ section[data-testid="stSidebar"] div[role="radiogroup"] label > div:first-child 
 section[data-testid="stSidebar"] .stRadio > label {
     display: none !important;
 }
-/* LANGUAGE SELECTOR */
-section[data-testid="stSidebar"] .stRadio div[role="radiogroup"] {
-    gap: 8px;
-}
-
-section[data-testid="stSidebar"] .stRadio div[role="radiogroup"] label {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.05);
-}
 
 /* Sidebar navigation item spacing and fonts */
 section[data-testid="stSidebar"] div[role="radiogroup"] label {
@@ -158,28 +149,8 @@ section[data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked)
 """, unsafe_allow_html=True)
 
 # --- 4. SIDEBAR CONTROLLERS (LANGUAGE & ROUTING) ---
-st.sidebar.markdown("""
-<div style="
-    margin-top:10px;
-    margin-bottom:25px;
-">
-    <p style="
-        color:#C5A059;
-        font-size:13px;
-        letter-spacing:2px;
-        margin-bottom:10px;
-        font-family:'Montserrat', sans-serif;
-    ">
-        LANGUAGE
-    </p>
-</div>
-""", unsafe_allow_html=True)
-
-lang_label = st.sidebar.radio(
-    "",
-    ["🇬🇧 English", "🇫🇷 Français"],
-    label_visibility="collapsed"
-)
+st.sidebar.markdown("<p style='font-size:14px; opacity:0.6; margin-bottom:-5px;'>✦ LANGUAGE / LANGUE</p>", unsafe_allow_html=True)
+lang_label = st.sidebar.selectbox("LangSelector", ["English", "Français"], label_visibility="collapsed")
 lang = "EN" if lang_label == "English" else "FR"
 
 # Pure multilingual dictionary configuration
