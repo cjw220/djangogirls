@@ -7,7 +7,7 @@ from travel_data import TRAVEL_DATABASE
 st.markdown("""
     <style>
 /* ============================= */
-/* PREMIUM SIDEBAR */
+/* PREMIUM SIDEBAR (FIXED SELECTORS) */
 /* ============================= */
 
 section[data-testid="stSidebar"] {
@@ -16,9 +16,8 @@ section[data-testid="stSidebar"] {
     padding-top: 40px;
 }
 
-
-/* Hide radio circles */
-div[role="radiogroup"] label > div:first-child {
+/* 💡 修正：只有側邊欄的單選鈕圈圈需要隱藏 */
+section[data-testid="stSidebar"] div[role="radiogroup"] label > div:first-child {
     display: none;
 }
 
@@ -27,37 +26,28 @@ section[data-testid="stSidebar"] .stRadio > label {
     display: none;
 }
 
-/* Sidebar items */
-div[role="radiogroup"] label {
-
+/* 💡 修正：只有側邊欄的選項字體與樣式變更 */
+section[data-testid="stSidebar"] div[role="radiogroup"] label {
     padding: 14px 18px;
     margin-bottom: 12px;
     border-radius: 14px;
-
     font-size: 21px !important;
     font-weight: 700 !important;
     letter-spacing: 0.3px;
-
     color: #F5F5F5 !important;
-
     transition: all 0.25s ease;
 }
 
-/* Hover effect */
-div[role="radiogroup"] label:hover {
-
+/* 💡 修正：只有側邊欄的 Hover 效果 */
+section[data-testid="stSidebar"] div[role="radiogroup"] label:hover {
     background-color: rgba(255,255,255,0.06);
-
     transform: translateX(4px);
 }
 
-/* Active page */
-div[role="radiogroup"] label:has(input:checked) {
-
+/* 💡 修正：只有側邊欄的選中狀態效果 */
+section[data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) {
     background-color: rgba(255,255,255,0.08);
-
     border-left: 3px solid white;
-
     padding-left: 20px;
 }
 
@@ -155,16 +145,12 @@ def go_back():
 if menu == "🏠 Home":
 
     st.markdown("<h1>🥐 Paris Destiny Agency</h1>", unsafe_allow_html=True)
-
     st.markdown("### *AI-Powered Luxury Travel Consulting*")
-
     st.divider()
-
     st.subheader("Welcome to Paris Destiny Agency ✨")
 
     st.write("""
     Discover personalized Paris experiences powered by AI.
-
     Whether you dream of romantic evenings, hidden cafés,
     luxury shopping, artistic adventures, or unforgettable food tours,
     our agency helps you uncover your perfect Paris journey.
@@ -175,19 +161,14 @@ if menu == "🏠 Home":
         caption="The beauty of Paris at sunset",
         use_container_width=True
     )
-
     st.divider()
-
     st.subheader("Why Choose Us?")
 
     col1, col2, col3 = st.columns(3)
-
     with col1:
         st.metric("Happy Travelers", "10,000+")
-
     with col2:
         st.metric("Hidden Cafés Explored", "250+")
-
     with col3:
         st.metric("Chance of Paris Drama", "99%")
 
@@ -198,14 +179,11 @@ if menu == "🏠 Home":
 elif menu == "ℹ️ About Us":
 
     st.title("About Paris Destiny Agency")
-
     st.write("""
     Paris Destiny Agency is a fictional luxury travel company
     created as a graduation project.
-
     Our mission is to combine technology, humor,
     and travel inspiration into one interactive experience.
-
     We help travelers discover:
     - Romantic destinations
     - Hidden Paris cafés
@@ -227,16 +205,12 @@ elif menu == "ℹ️ About Us":
 elif menu == "✨ Services":
 
     st.title("Our Services")
-
     st.subheader("🥐 Luxury Food Tours")
     st.write("Discover hidden bakeries and iconic Paris cafés.")
-
     st.subheader("🎨 Art & Museum Experiences")
     st.write("Explore the Louvre and Parisian art culture.")
-
     st.subheader("🌃 Romantic Evening Walks")
     st.write("Private guided experiences around Paris at night.")
-
     st.subheader("🤖 AI Travel Matching")
     st.write("Receive personalized recommendations through our AI quiz.")
 
@@ -256,44 +230,48 @@ elif menu == "🧠 AI Quiz":
     if st.session_state.page == 'home':
 
         st.markdown("<h1>🔮 Paris Destiny Quiz</h1>", unsafe_allow_html=True)
-
         st.markdown("### Discover your spiritual corner in Paris")
-
         st.divider()
 
         q1 = st.selectbox(
             "1. What kind of traveler are you?",
             [
-                "(Funny) I survive on chaos and caffeine",
-                "(Serious) Romantic explorer",
-                "(Serious) Art and museum lover",
-                "(Serious) Luxury traveler"
+                "I survive on chaos and caffeine",
+                "Romantic explorer",
+                "Art and museum lover",
+                "Luxury traveler"
             ]
         )
 
         q2 = st.radio(
             "2. Your ideal Paris breakfast?",
             [
-                "(Funny) Free hotel bread",
-                "(Serious) Artisan croissant and coffee",
-                "(Serious) Fancy rooftop brunch"
+                "Free hotel bread",
+                "Artisan croissant and coffee",
+                "Fancy rooftop brunch"
             ]
         )
 
         q3 = st.selectbox(
             "3. What is your vacation energy?",
             [
-                "(Funny) Confused but trying my best",
-                "(Serious) Elegant and classy",
-                "(Serious) Adventure and exploration"
+                "Confused but trying my best",
+                "Elegant and classy",
+                "Adventure and exploration"
             ]
         )
 
         if st.button("🔮 Seek My Fortune"):
 
+            funny_options = [
+                "I survive on chaos and caffeine",
+                "Free hotel bread",
+                "Confused but trying my best"
+            ]
+
             funny_count = sum(
                 1 for ans in [q1, q2, q3]
-                if "(Funny)" in ans
+                if ans in funny_options
             )
 
             category = "funny" if funny_count >= 1 else "serious"
@@ -323,12 +301,10 @@ elif menu == "🧠 AI Quiz":
 
         # Navigation Buttons
         col1, col2 = st.columns(2)
-
         with col1:
             if st.button("⬅️ Retake Quiz"):
                 go_back()
                 st.rerun()
-
         with col2:
             if 'url' in res:
                 st.link_button("Official Info", res['url'])
@@ -337,9 +313,7 @@ elif menu == "🧠 AI Quiz":
 
         # Contact Form
         st.subheader("📩 Book a Private Tour")
-
         with st.form("contact"):
-
             name = st.text_input("Full Name")
             email = st.text_input("Email Address")
             travelers = st.number_input(
@@ -348,11 +322,9 @@ elif menu == "🧠 AI Quiz":
                 max_value=20,
                 value=2
             )
-
             notes = st.text_area("Any special requests?")
 
             if st.form_submit_button("Send to Consultant"):
-
                 st.success(
                     f"Merci, {name}! "
                     f"We will contact you at {email} soon."
@@ -365,19 +337,16 @@ elif menu == "🧠 AI Quiz":
 elif menu == "📩 Contact":
 
     st.title("Contact Us")
-
     st.write("""
     Have questions about your Paris adventure?
     Our consultants are here to help.
     """)
 
     with st.form("main_contact_form"):
-
         name = st.text_input("Full Name")
         email = st.text_input("Email Address")
         phone = st.text_input("Phone Number", placeholder="+49 176 12345678")
         message = st.text_area("Your Message")
-
         submitted = st.form_submit_button("Send Message")
 
         if submitted:
@@ -390,16 +359,12 @@ elif menu == "📩 Contact":
 elif menu == "⚖️ Imprint":
 
     st.title("Imprint")
-
     st.write("""
     Paris Destiny Agency  
     123 Rue de la Paix  
     75002 Paris, France  
-
     Email: hello@parisdestinyagency.com  
-
     This website is a student graduation project.
-
     Image Sources:
     Unsplash.com
     """)
@@ -415,7 +380,6 @@ st.markdown("""
         <b>Paris Destiny Agency</b> |
         AI-Powered Luxury Travel Consulting
         </p>
-
         <p>
         Student Graduation Project • Built with Streamlit
         </p>
